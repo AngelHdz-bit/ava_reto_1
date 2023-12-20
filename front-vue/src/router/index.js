@@ -1,11 +1,29 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import TareaNew from '../views/TareaNew.vue'
+import TareaEdit from '../views/TareaEdit.vue'
+import TareaView from '../views/TareaView.vue'
 
 const routes = [
   {
     path: '/',
     name: 'home',
     component: HomeView
+  },
+  {
+    path: '/newTarea',
+    name: 'create',
+    component: TareaNew
+  },
+  {
+    path: '/editTarea/:id',
+    name: 'edit',
+    component: TareaEdit
+  },
+  {
+    path: '/tareaview',
+    name: 'view',
+    component: TareaView
   },
   {
     path: '/about',
