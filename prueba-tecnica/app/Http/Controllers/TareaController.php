@@ -36,5 +36,17 @@ class TareaController extends Controller
         }
     }
 
+    public function destroy($id)
+    {
+        try {
+            $tarea = Tarea::findOrFail($id);
+            $tarea->delete();
+
+            return response()->json(['message' => 'Tarea eliminada correctamente'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Error al eliminar la tarea: ' . $e->getMessage()], 500);
+        }
+    }
+
 
 }

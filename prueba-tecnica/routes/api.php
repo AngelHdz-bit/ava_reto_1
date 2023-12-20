@@ -20,3 +20,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('/create-tareas', [TareaController::class,'store']);
 Route::get('/get-tareas', [TareaController::class,'show']);
+Route::delete('/delete-tarea/{id}', [TareaController::class,'destroy']);
