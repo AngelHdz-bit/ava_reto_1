@@ -26,4 +26,15 @@ class TareaController extends Controller
         }
     }
 
+    public function show()
+    {
+        try {
+            $tareas = Tarea::all();
+            return response()->json($tareas, 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Error al obtener las tareas: ' . $e->getMessage()], 500);
+        }
+    }
+
+
 }
