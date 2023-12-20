@@ -48,5 +48,23 @@ class TareaController extends Controller
         }
     }
 
+    public function update(Request $request, $id)
+    {
+        try {
+            $tarea = Tarea::findOrFail($id);
+
+            $request->validate([
+                'titulo' => 'required|string|max:255',
+                'descripcion' => 'required|string',
+                'completada' => 'required|boolean',
+            ]);
+
+            $tarea->update($request->all());
+
+            return response()->json(['message' => 'Tarea actualizada correctamente'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Error al actualizar la tarea: ' . $e->getMessage()], 500);
+        }
+    }
 
 }
