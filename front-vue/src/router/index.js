@@ -6,7 +6,7 @@ import TareaView from '../views/TareaView.vue'
 
 const routes = [
   {
-    path: '/',
+    path: '/home',
     name: 'home',
     component: HomeView
   },
@@ -16,12 +16,12 @@ const routes = [
     component: TareaNew
   },
   {
-    path: '/editTarea/:id',
+    path: '/edit/:id',
     name: 'edit',
     component: TareaEdit
   },
   {
-    path: '/tareaview',
+    path: '/',
     name: 'view',
     component: TareaView
   },

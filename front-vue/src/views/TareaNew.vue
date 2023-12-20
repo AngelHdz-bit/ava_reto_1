@@ -1,56 +1,59 @@
 <template>
-    <html lang="en">
-        <div class="container">
-            <a href="" class="btn btn-outline-primary mt-4"> Agregar</a>
-            <table class="table table-bordered table-striped text-center mt-4">
-                <thead>
-                    <tr class="bg-primary text-white">
-                        <th scope="col">ID</th>
-                        <th scope="col" >Titulo</th>
-                        <th scope="col" >Descripcion</th>
-                        <th scope="col" >Completada</th>
-                        <th scope="col" >Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="tarea in tareas" :key="tarea.id">
-                        <td v-text="tarea.id"></td>
-                        <td v-text="tarea.titulo"></td>
-                        <td v-text="tarea.descripcion"></td>
-                        <td v-text="tarea.completada"></td>
-                        <td>
-                            <a href="" class="btn btn-outline-info">editar</a>
-                            <a href="" class="btn btn-outline-danger">borrar</a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+    <div class="container mt-4">
+      <div class="card border-secondary">
+        <div class="card-header">Nueva Tarea</div>
+        <div class="card-body">
+          <form @submit.prevent="guardarTarea">
+            <div class="mb-3">
+              <label for="titulo" class="form-label">Nombre de la tarea</label>
+              <input v-model="titulo" type="text" class="form-control" id="titulo" name="titulo" tabindex="1">
+            </div>
+            <div class="mb-3">
+              <label for="descripcion" class="form-label">Descripción</label>
+              <input v-model="descripcion" type="text" class="form-control" id="descripcion" name="descripcion" tabindex="2">
+            </div>
+            <div class="mb-3">
+              <label for="completada" class="form-label">Completada</label>
+              <input v-model="completada" type="text" class="form-control" id="completada" name="completada" tabindex="3">
+            </div>
+            <button type="submit" class="btn btn-primary" tabindex="4">Guardar</button>
+            <router-link to="/" class="btn btn-secondary">Cancelar</router-link>
+          </form>
         </div>
-    </html>
-</template>
-
-<script>
-    import axios from 'axios';
-
-    export default {
-        data() {
-            return {
-                tareas: null,
-            };
-        },
-        mounted() {
-            this.getTareas(); // Llama a la función getTareas
-        },
-        methods: {
-            getTareas() {
-                axios.get('http://127.0.0.1:8000/api/get-tareas')
-                    .then(res => {
-                        this.tareas = res.data;
-                    })
-                    .catch(error => {
-                        console.error('Error al obtener las tareas', error);
-                    });
-            },
-        },
-    };
-</script>
+      </div>
+    </div>
+  </template>
+  
+  <script>
+  import axios from 'axios';
+  
+  export default {
+    data() {
+      return {
+        titulo: '',
+        descripcion: '',
+        completada: '',
+      };
+    },
+    methods: {
+      async guardarTarea() {
+        try {
+          const tareaData = {
+            titulo: this.titulo,
+            descripcion: this.descripcion,
+            completada: this.completada,
+          };
+          const response = await axios.post('http://127.0.0.1:8000/api/create-tareas', tareaData);
+          console.log(response.data);
+          this.$router.push({ name: 'view' }); 
+        } catch (error) {
+          console.error('Error al crear la tarea:', error);
+          if (error.response && error.response.data) {
+            console.error('Detalles del error:', error.response.data);
+          }
+        }
+      },
+    },
+  };
+  </script>
+  
